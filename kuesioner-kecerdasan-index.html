@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tes 8 Kecerdasan Anak - Temukan Potensi Unik Si Kecil</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #ffd0e1 0%, #ffc0cb 50%, #ffb6c1 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.1);
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            text-align: center;
+            color: #d63384;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .intro-section {
+            margin-bottom: 30px;
+        }
+        
+        .intro-section h2 {
+            color: #d63384;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        .intro-section p {
+            margin-bottom: 10px;
+            color: #4a5568;
+        }
+        
+        .start-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .start-button:hover {
+            background: #d81b60;
+            transform: translateY(-2px);
+        }
+        
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #e91e63;
+            transition: width 0.5s ease;
+            border-radius: 5px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #ffe4e9;
+            border-radius: 10px;
+        }
+        
+        .category-icon {
+            font-size: 40px;
+            margin-right: 15px;
+        }
+        
+        .category-info h3 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        
+        .category-info p {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #fff0f3;
+            border-radius: 10px;
+        }
+        
+        .question-text {
+            margin-bottom: 15px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .rating-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .rating-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .rating-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .rating-option.selected {
+            background: #e91e63;
+            color: white;
+            border-color: #e91e63;
+        }
+        
+        .rating-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .rating-label {
+            font-size: 11px;
+            margin-top: 5px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 10px;
+        }
+        
+        .nav-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .prev-button {
+            background: #cbd5e0;
+            color: #2d3748;
+        }
+        
+        .prev-button:hover {
+            background: #a0aec0;
+        }
+        
+        .next-button {
+            background: #e91e63;
+            color: white;
+        }
+        
+        .next-button:hover {
+            background: #d81b60;
+        }
+        
+        .next-button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+        
+        .category-score {
+            text-align: center;
+            padding: 20px;
+            background: #ffd6e0;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .category-score h4 {
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+        
+        .score-display {
+            font-size: 36px;
+            font-weight: bold;
+            color: #e91e63;
+        }
+        
+        .result-section {
+            display: none;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 30px 0;
+        }
+        
+        .result-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #ffe4e9;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .result-rank {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 15px;
+            color: #e91e63;
+        }
+        
+        .result-icon {
+            font-size: 30px;
+            margin-right: 15px;
+        }
+        
+        .result-info {
+            flex: 1;
+        }
+        
+        .result-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .result-score {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .recommendation {
+            background: #ffeef2;
+            border-left: 4px solid #e91e63;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        
+        .recommendation h4 {
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .share-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-button {
+            background: #25d366;
+            color: white;
+        }
+        
+        .whatsapp-button:hover {
+            background: #1ebe57;
+        }
+        
+        .save-button {
+            background: #e53e3e;
+            color: white;
+        }
+        
+        .save-button:hover {
+            background: #c53030;
+        }
+        
+        .restart-button {
+            background: #718096;
+            color: white;
+        }
+        
+        .restart-button:hover {
+            background: #4a5568;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #d63384;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        .footer a {
+            color: #e91e63;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .rating-container {
+                flex-wrap: wrap;
+            }
+            
+            .rating-option {
+                min-width: 45%;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #e2e8f0;
+            }
+            
+            .navigation, .share-buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="mainCard">
+            <!-- Intro Section -->
+            <div id="introSection">
+                <h1>🌟 Tes 8 Kecerdasan Anak 🌟</h1>
+                <p class="subtitle">Temukan Potensi Unik Si Kecil!</p>
+                
+                <div class="intro-section">
+                    <h2>Apa itu 8 Kecerdasan?</h2>
+                    <p>Teori dari Dr. Howard Gardner menjelaskan bahwa setiap anak memiliki 8 jenis kecerdasan berbeda. Tidak ada anak yang "bodoh" - setiap anak cerdas dengan caranya sendiri!</p>
+                    
+                    <h2 style="margin-top: 20px;">Petunjuk Pengisian</h2>
+                    <p>• Pilih nilai 0-3 untuk setiap pertanyaan:</p>
+                    <p>&nbsp;&nbsp;0 = Tidak pernah | 1 = Kadang | 2 = Sering | 3 = Sangat sering</p>
+                    <p>• Bandingkan dengan anak seusianya</p>
+                    <p>• Total waktu: ±15 menit</p>
+                    
+                    <h2 style="margin-top: 20px;">Data Anak</h2>
+                    <div style="margin-top: 15px;">
+                        <input type="text" id="childName" placeholder="Nama Anak" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        <input type="number" id="childAge" placeholder="Usia (tahun)" min="3" max="15" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 8px;">
+                    </div>
+                </div>
+                
+                <button class="start-button" onclick="startAssessment()">Mulai Tes</button>
+            </div>
+            
+            <!-- Assessment Section -->
+            <div id="assessmentSection" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Kategori 1 dari 8</div>
+                </div>
+                
+                <div id="categoryContent"></div>
+                
+                <div class="navigation">
+                    <button class="nav-button prev-button" onclick="previousCategory()" id="prevBtn">Kembali</button>
+                    <button class="nav-button next-button" onclick="nextCategory()" id="nextBtn">Lanjut</button>
+                </div>
+            </div>
+            
+            <!-- Result Section -->
+            <div id="resultSection" class="result-section">
+                <h1>🎉 Hasil Tes Kecerdasan 🎉</h1>
+                <p class="subtitle" id="resultSubtitle"></p>
+                
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                
+                <h2 style="color: #d63384; margin-bottom: 20px;">Top 3 Kecerdasan Dominan:</h2>
+                <div id="topResults"></div>
+                
+                <div id="recommendations"></div>
+                
+                <div class="share-buttons">
+                    <button class="share-button whatsapp-button" onclick="shareWhatsApp()">
+                        📱 Share WhatsApp
+                    </button>
+                    <button class="share-button save-button" onclick="window.print()">
+                        📄 Save PDF
+                    </button>
+                    <button class="share-button restart-button" onclick="location.reload()">
+                        🔄 Tes Ulang
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Made with 💕 by <a href="https://azlaffa.id" target="_blank">azlaffa.id</a>
+        </div>
+    </div>
+
+    <script>
+        // Data struktur untuk 8 kecerdasan
+        const intelligences = [
+            {
+                id: 'linguistic',
+                name: 'Bahasa',
+                icon: '🗣️',
+                description: 'Pintar berbicara dan bercerita',
+                professions: 'Guru, Penulis, Wartawan, Penyiar',
+                questions: [
+                    "Suka bercerita tentang kejadian sehari-hari dengan runtut",
+                    "Mudah mengingat nama teman dan tempat yang pernah dikunjungi",
+                    "Senang mendengarkan dongeng atau cerita",
+                    "Suka membuat pantun atau bernyanyi dengan kata-kata sendiri",
+                    "Lebih suka dibacakan buku cerita daripada nonton TV/HP",
+                    "Bisa menjelaskan keinginannya dengan jelas",
+                    "Sering bertanya 'Apa artinya kata ini?'",
+                    "Senang main tebak-tebakan kata",
+                    "Cepat hafal lagu anak-anak atau doa pendek",
+                    "Suka mencoret-coret atau pura-pura menulis surat"
+                ],
+                tips: [
+                    "Bacakan dongeng sebelum tidur dengan suara berbeda-beda",
+                    "Main tebak-tebakan atau pantun anak",
+                    "Ajak anak bercerita tentang kegiatannya hari ini",
+                    "Buat buku cerita bergambar bersama"
+                ]
+            },
+            {
+                id: 'mathematical',
+                name: 'Matematika-Logika',
+                icon: '🔢',
+                description: 'Pintar berhitung dan berpikir logis',
+                professions: 'Dokter, Insinyur, Akuntan, Programmer',
+                questions: [
+                    "Suka menghitung mainan, kelereng, atau permen yang dimiliki",
+                    "Senang bermain puzzle atau menyusun balok",
+                    "Sering bertanya 'Kenapa?' tentang berbagai hal",
+                    "Bisa mengurutkan mainan dari kecil ke besar",
+                    "Senang main ular tangga atau permainan yang pakai dadu",
+                    "Tertarik dengan angka di sekitar (nomor rumah, plat mobil)",
+                    "Suka mengelompokkan mainan berdasarkan jenis atau warna",
+                    "Paham konsep lebih banyak dan lebih sedikit",
+                    "Senang bermain toko-tokoan dengan menghitung uang mainan",
+                    "Suka membongkar mainan untuk tahu isinya"
+                ],
+                tips: [
+                    "Main toko-tokoan dengan uang mainan",
+                    "Ajak hitung benda saat jalan-jalan",
+                    "Main puzzle atau permainan susun balok",
+                    "Ajari konsep besar-kecil, banyak-sedikit"
+                ]
+            },
+            {
+                id: 'visual',
+                name: 'Visual-Spasial',
+                icon: '🎨',
+                description: 'Pintar menggambar dan berimajinasi',
+                professions: 'Arsitek, Desainer, Pelukis, Fotografer',
+                questions: [
+                    "Suka menggambar atau mewarnai dengan rapi",
+                    "Mudah mengingat jalan ke rumah nenek atau sekolah",
+                    "Senang main lego atau menyusun balok jadi bangunan",
+                    "Bisa membedakan warna dengan baik (tahu warna pink, ungu, dll)",
+                    "Suka melihat buku bergambar lebih lama",
+                    "Senang main petak umpet atau permainan cari barang",
+                    "Bisa menggambar orang dengan kepala, badan, tangan, kaki",
+                    "Suka mengatur ulang mainan di kamar",
+                    "Mudah menemukan mainan yang hilang",
+                    "Senang membuat bentuk dari plastisin atau tanah liat"
+                ],
+                tips: [
+                    "Sediakan crayon, pensil warna, dan kertas gambar",
+                    "Main lego atau balok susun",
+                    "Ajak membuat kerajinan dari barang bekas",
+                    "Main tebak gambar atau puzzle"
+                ]
+            },
+            {
+                id: 'kinesthetic',
+                name: 'Gerak Tubuh',
+                icon: '🏃',
+                description: 'Pintar bergerak dan olahraga',
+                professions: 'Atlet, Penari, Chef, Dokter Bedah',
+                questions: [
+                    "Cepat belajar naik sepeda atau main sepatu roda",
+                    "Suka bergerak sambil belajar atau menghafal",
+                    "Mudah meniru gerakan senam atau tarian",
+                    "Lebih suka belajar dengan praktek langsung",
+                    "Jarang jatuh saat berlari atau bermain",
+                    "Bisa menggunting mengikuti garis dengan rapi",
+                    "Senang main plastisin, pasir, atau mainan yang dipegang",
+                    "Tidak bisa duduk diam terlalu lama",
+                    "Mahir main lempar tangkap bola",
+                    "Suka membantu kegiatan di rumah (masak, bersih-bersih)"
+                ],
+                tips: [
+                    "Ajak main di taman atau playground",
+                    "Latih keseimbangan dengan jalan di garis lurus",
+                    "Main lempar tangkap bola bersama",
+                    "Ajak senam atau dance mengikuti video"
+                ]
+            },
+            {
+                id: 'musical',
+                name: 'Musik',
+                icon: '🎵',
+                description: 'Pintar musik dan bernyanyi',
+                professions: 'Penyanyi, Musisi, Guru Musik, Komposer',
+                questions: [
+                    "Mudah hafal lagu anak-anak atau lagu daerah",
+                    "Suka bernyanyi atau bersenandung saat main",
+                    "Bisa membedakan suara binatang atau kendaraan",
+                    "Senang mengetuk-ngetuk meja mengikuti irama",
+                    "Tahu kalau ada yang nyanyi fals atau sumbang",
+                    "Suka mendengarkan lagu berulang-ulang",
+                    "Mudah mengingat nada dering HP atau suara mainan",
+                    "Senang main alat musik mainan (piano kecil, drum, dll)",
+                    "Bisa ikut tepuk tangan sesuai irama lagu",
+                    "Suka membuat suara-suara dengan mulut atau benda"
+                ],
+                tips: [
+                    "Nyanyi lagu anak-anak bersama",
+                    "Buat alat musik dari kaleng atau botol",
+                    "Ajak tepuk tangan mengikuti irama",
+                    "Perkenalkan berbagai jenis musik"
+                ]
+            },
+            {
+                id: 'interpersonal',
+                name: 'Sosial',
+                icon: '👥',
+                description: 'Pintar bergaul dan berteman',
+                professions: 'Guru, Dokter, Psikolog, Perawat',
+                questions: [
+                    "Peka saat ada teman yang sedih atau marah",
+                    "Suka membantu menyelesaikan pertengkaran teman",
+                    "Mudah akrab dengan anak yang baru dikenal",
+                    "Ingat nama dan kesukaan teman-temannya",
+                    "Bisa bicara sopan ke orang tua dan lembut ke adik kecil",
+                    "Sering jadi ketua saat main bersama",
+                    "Mau berbagi mainan atau makanan dengan teman",
+                    "Senang main berkelompok daripada sendiri",
+                    "Paham kenapa temannya marah atau sedih",
+                    "Suka mengajak teman untuk main bersama"
+                ],
+                tips: [
+                    "Atur playdate dengan teman sebaya",
+                    "Main peran dokter-dokteran atau sekolah-sekolahan",
+                    "Ajari cara berbagi dan bergiliran",
+                    "Ikut kegiatan kelompok seperti senam atau les"
+                ]
+            },
+            {
+                id: 'intrapersonal',
+                name: 'Diri',
+                icon: '🤔',
+                description: 'Pintar memahami diri sendiri',
+                professions: 'Pengusaha, Penulis, Konselor, Motivator',
+                questions: [
+                    "Bisa bilang kenapa dia sedih, marah, atau senang",
+                    "Punya cara sendiri untuk tenang saat kesal",
+                    "Tahu apa yang dia suka dan tidak suka",
+                    "Berani mengambil keputusan sendiri",
+                    "Betah main sendiri tanpa rewel",
+                    "Punya cita-cita atau keinginan yang jelas",
+                    "Tahu kalau dia lapar akan mudah marah",
+                    "Tidak mudah ikut-ikutan teman",
+                    "Bisa minta maaf kalau salah",
+                    "Punya pendapat sendiri tentang berbagai hal"
+                ],
+                tips: [
+                    "Beri waktu tenang untuk main sendiri",
+                    "Ajari mengenali emosi (senang, sedih, marah)",
+                    "Buat target sederhana dan rayakan pencapaian",
+                    "Beri kesempatan memilih (baju, makanan, mainan)"
+                ]
+            },
+            {
+                id: 'naturalist',
+                name: 'Alam',
+                icon: '🌿',
+                description: 'Pintar tentang alam dan binatang',
+                professions: 'Dokter Hewan, Petani, Ahli Biologi, Chef',
+                questions: [
+                    "Suka memperhatikan semut, kupu-kupu, atau binatang kecil",
+                    "Senang merawat tanaman atau hewan peliharaan",
+                    "Bisa tebak mau hujan dari melihat awan",
+                    "Suka mengumpulkan batu, daun, atau bunga",
+                    "Peduli lingkungan (buang sampah pada tempatnya)",
+                    "Tertarik melihat ulat jadi kupu-kupu",
+                    "Hafal suara binatang (kucing, anjing, burung)",
+                    "Lebih senang main di taman atau halaman",
+                    "Sering tanya tentang binatang dan tumbuhan",
+                    "Sayang sama hewan, tidak suka menyakiti"
+                ],
+                tips: [
+                    "Ajak berkebun atau menyiram tanaman",
+                    "Jalan-jalan ke taman sambil mengamati alam",
+                    "Beri makan ikan atau burung di taman",
+                    "Ajak ke kebun binatang atau akuarium"
+                ]
+            }
+        ];
+
+        // State management
+        let currentCategory = 0;
+        let scores = {};
+        let answers = {};
+
+        // Initialize scores
+        intelligences.forEach(intel => {
+            scores[intel.id] = 0;
+            answers[intel.id] = new Array(intel.questions.length).fill(null);
+        });
+
+        function startAssessment() {
+            const name = document.getElementById('childName').value.trim();
+            const age = document.getElementById('childAge').value;
+            
+            if (!name || !age) {
+                alert('Mohon isi nama dan usia anak terlebih dahulu');
+                return;
+            }
+            
+            document.getElementById('introSection').style.display = 'none';
+            document.getElementById('assessmentSection').style.display = 'block';
+            
+            showCategory(0);
+        }
+
+        function showCategory(index) {
+            const intel = intelligences[index];
+            const content = document.getElementById('categoryContent');
+            
+            let html = `
+                <div class="category-header">
+                    <div class="category-icon">${intel.icon}</div>
+                    <div class="category-info">
+                        <h3>Kecerdasan ${intel.name}</h3>
+                        <p>${intel.description}</p>
+                    </div>
+                </div>
+            `;
+            
+            intel.questions.forEach((question, qIndex) => {
+                const currentAnswer = answers[intel.id][qIndex];
+                html += `
+                    <div class="question">
+                        <div class="question-text">${qIndex + 1}. ${question}</div>
+                        <div class="rating-container">
+                            ${[0, 1, 2, 3].map(value => `
+                                <div class="rating-option ${currentAnswer === value ? 'selected' : ''}" 
+                                     onclick="selectRating('${intel.id}', ${qIndex}, ${value})">
+                                    <div class="rating-value">${value}</div>
+                                    <div class="rating-label">${getRatingLabel(value)}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Add category score if all questions answered
+            const categoryAnswers = answers[intel.id];
+            const allAnswered = categoryAnswers.every(a => a !== null);
+            if (allAnswered) {
+                const categoryScore = categoryAnswers.reduce((sum, val) => sum + val, 0);
+                html += `
+                    <div class="category-score">
+                        <h4>Skor Kategori ${intel.name}</h4>
+                        <div class="score-display">${categoryScore}/30</div>
+                    </div>
+                `;
+            }
+            
+            content.innerHTML = html;
+            
+            // Update progress
+            updateProgress();
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = index === 0 ? 'none' : 'block';
+            document.getElementById('nextBtn').textContent = index === intelligences.length - 1 ? 'Lihat Hasil' : 'Lanjut';
+            updateNextButton();
+        }
+
+        function getRatingLabel(value) {
+            const labels = ['Tidak pernah', 'Kadang', 'Sering', 'Sangat sering'];
+            return labels[value];
+        }
+
+        function selectRating(intelId, questionIndex, value) {
+            answers[intelId][questionIndex] = value;
+            
+            // Update visual
+            showCategory(currentCategory);
+        }
+
+        function updateProgress() {
+            const totalQuestions = intelligences.reduce((sum, intel) => sum + intel.questions.length, 0);
+            const answeredQuestions = Object.values(answers).flat().filter(a => a !== null).length;
+            const percentage = (answeredQuestions / totalQuestions) * 100;
+            
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = 
+                `Kategori ${currentCategory + 1} dari 8 (${Math.round(percentage)}% selesai)`;
+        }
+
+        function updateNextButton() {
+            const intel = intelligences[currentCategory];
+            const categoryAnswers = answers[intel.id];
+            const allAnswered = categoryAnswers.every(a => a !== null);
+            
+            document.getElementById('nextBtn').disabled = !allAnswered;
+        }
+
+        function previousCategory() {
+            if (currentCategory > 0) {
+                currentCategory--;
+                showCategory(currentCategory);
+            }
+        }
+
+        function nextCategory() {
+            if (currentCategory < intelligences.length - 1) {
+                currentCategory++;
+                showCategory(currentCategory);
+            } else {
+                // Calculate final scores and show results
+                calculateScores();
+                showResults();
+            }
+        }
+
+        function calculateScores() {
+            intelligences.forEach(intel => {
+                scores[intel.id] = answers[intel.id].reduce((sum, val) => sum + val, 0);
+            });
+        }
+
+        function showResults() {
+            document.getElementById('assessmentSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'block';
+            
+            const name = document.getElementById('childName').value;
+            const age = document.getElementById('childAge').value;
+            
+            document.getElementById('resultSubtitle').textContent = 
+                `${name} (${age} tahun) - ${new Date().toLocaleDateString('id-ID')}`;
+            
+            // Sort intelligences by score
+            const sortedIntel = intelligences.map(intel => ({
+                ...intel,
+                score: scores[intel.id]
+            })).sort((a, b) => b.score - a.score);
+            
+            // Show top 3
+            const topResultsHtml = sortedIntel.slice(0, 3).map((intel, index) => `
+                <div class="result-item">
+                    <div class="result-rank">#${index + 1}</div>
+                    <div class="result-icon">${intel.icon}</div>
+                    <div class="result-info">
+                        <div class="result-name">Kecerdasan ${intel.name}</div>
+                        <div class="result-score">Skor: ${intel.score}/30 (${getScoreLevel(intel.score)})</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('topResults').innerHTML = topResultsHtml;
+            
+            // Show recommendations for top 3
+            const recommendationsHtml = sortedIntel.slice(0, 3).map(intel => `
+                <div class="recommendation">
+                    <h4>${intel.icon} Tips Mengembangkan Kecerdasan ${intel.name}:</h4>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        ${intel.tips.map(tip => `<li style="margin-bottom: 5px;">${tip}</li>`).join('')}
+                    </ul>
+                    <p style="margin-top: 10px; font-size: 14px; color: #718096;">
+                        <strong>Potensi Profesi:</strong> ${intel.professions}
+                    </p>
+                </div>
+            `).join('');
+            
+            document.getElementById('recommendations').innerHTML = recommendationsHtml;
+            
+            // Create radar chart
+            createRadarChart();
+        }
+
+        function getScoreLevel(score) {
+            if (score >= 24) return 'Sangat Menonjol ⭐⭐⭐⭐';
+            if (score >= 18) return 'Menonjol ⭐⭐⭐';
+            if (score >= 12) return 'Berkembang Normal ⭐⭐';
+            return 'Perlu Perhatian ⭐';
+        }
+
+        function createRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            const data = {
+                labels: intelligences.map(intel => intel.name),
+                datasets: [{
+                    label: 'Skor Kecerdasan',
+                    data: intelligences.map(intel => scores[intel.id]),
+                    fill: true,
+                    backgroundColor: 'rgba(233, 30, 99, 0.2)',
+                    borderColor: 'rgb(233, 30, 99)',
+                    pointBackgroundColor: 'rgb(233, 30, 99)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(233, 30, 99)'
+                }]
+            };
+            
+            const config = {
+                type: 'radar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: false
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 30,
+                            ticks: {
+                                stepSize: 10
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            };
+            
+            new Chart(ctx, config);
+        }
+
+        function shareWhatsApp() {
+            const name = document.getElementById('childName').value;
+            const age = document.getElementById('childAge').value;
+            
+            const sortedIntel = intelligences.map(intel => ({
+                ...intel,
+                score: scores[intel.id]
+            })).sort((a, b) => b.score - a.score);
+            
+            const top3 = sortedIntel.slice(0, 3);
+            
+            let message = `*Hasil Tes 8 Kecerdasan*\n`;
+            message += `Nama: ${name} (${age} tahun)\n`;
+            message += `Tanggal: ${new Date().toLocaleDateString('id-ID')}\n\n`;
+            message += `*Top 3 Kecerdasan:*\n`;
+            
+            top3.forEach((intel, index) => {
+                message += `${index + 1}. ${intel.icon} ${intel.name}: ${intel.score}/30\n`;
+            });
+            
+            message += `\nLihat detail dan tips pengembangan di:\n`;
+            message += window.location.href;
+            
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
